@@ -1,0 +1,52 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from '@/components/ui/sonner';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import NotFound from '@/pages/not-found';
+import { Route, Switch, Router as WouterRouter } from 'wouter';
+
+// Pages
+import Home from './pages/Home';
+import About from './pages/About';
+import Services from './pages/Services';
+import Programs from './pages/Programs';
+import Enquiries from './pages/Enquiries';
+
+// Layout
+import { Navbar } from './components/Navbar';
+import { Footer } from './components/Footer';
+
+const queryClient = new QueryClient();
+
+function Router() {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <main className="flex-grow">
+        <Switch>
+          <Route path="/" component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/services" component={Services} />
+          <Route path="/programs" component={Programs} />
+          <Route path="/enquiries" component={Enquiries} />
+          <Route component={NotFound} />
+        </Switch>
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+          <Router />
+        </WouterRouter>
+        <Toaster position="top-center" richColors />
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+}
+
+export default App;
