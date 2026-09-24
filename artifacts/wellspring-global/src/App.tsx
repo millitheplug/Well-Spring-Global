@@ -10,6 +10,7 @@ import About from './pages/About';
 import Services from './pages/Services';
 import Programs from './pages/Programs';
 import Enquiries from './pages/Enquiries';
+import Donate from './pages/Donate';
 
 // Layout
 import { Navbar } from './components/Navbar';
@@ -28,6 +29,7 @@ function Router() {
           <Route path="/services" component={Services} />
           <Route path="/programs" component={Programs} />
           <Route path="/enquiries" component={Enquiries} />
+          <Route path="/donate" component={Donate} />
           <Route component={NotFound} />
         </Switch>
       </main>
