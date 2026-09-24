@@ -17,14 +17,11 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [location]);
@@ -41,76 +38,45 @@ export function Navbar() {
       >
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex items-center justify-between h-20">
-            {/* Logo */}
             <Link href="/" className="flex items-center gap-3 relative z-50">
               <img src={logoPath} alt="Well Spring Global" className="h-14 w-auto object-contain" style={{ mixBlendMode: 'multiply' }} />
             </Link>
 
-            {/* Desktop Nav */}
             <nav className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    location === link.href ? "text-primary font-semibold" : "text-foreground/80"
-                  }`}
-                >
+                <Link key={link.href} href={link.href} className={`text-sm font-medium transition-colors hover:text-primary ${location === link.href ? "text-primary font-semibold" : "text-foreground/80"}`}>
                   {link.label}
                 </Link>
               ))}
-              <Link
-                href="/enquiries"
-                className="bg-primary text-primary-foreground px-6 py-2.5 rounded-full text-sm font-medium hover:scale-105 transition-transform active:scale-95 flex items-center justify-center shadow-md shadow-primary/20"
-              >
+              <Link href="/donate" className="border border-primary text-primary px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary hover:text-primary-foreground transition-colors">
+                Donate
+              </Link>
+              <Link href="/enquiries" className="bg-primary text-primary-foreground px-6 py-2.5 rounded-full text-sm font-medium hover:scale-105 transition-transform active:scale-95 flex items-center justify-center shadow-md shadow-primary/20">
                 Enquiries
               </Link>
             </nav>
 
-            {/* Mobile Menu Toggle */}
-            <button
-              className="md:hidden relative z-50 p-2 text-foreground"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu"
-            >
+            <button className="md:hidden relative z-50 p-2 text-foreground" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu">
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
       </motion.header>
 
-      {/* Mobile Menu Panel */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-background/80 backdrop-blur-md md:hidden"
-          >
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="absolute right-0 top-0 bottom-0 w-3/4 max-w-sm bg-white shadow-2xl p-6 flex flex-col pt-24 border-l"
-            >
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-40 bg-background/80 backdrop-blur-md md:hidden">
+            <motion.div initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={{ type: "spring", stiffness: 300, damping: 30 }} className="absolute right-0 top-0 bottom-0 w-3/4 max-w-sm bg-white shadow-2xl p-6 flex flex-col pt-24 border-l">
               <nav className="flex flex-col gap-6">
                 {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`text-lg font-medium border-b border-border/50 pb-2 ${
-                      location === link.href ? "text-primary" : "text-foreground"
-                    }`}
-                  >
+                  <Link key={link.href} href={link.href} className={`text-lg font-medium border-b border-border/50 pb-2 ${location === link.href ? "text-primary" : "text-foreground"}`}>
                     {link.label}
                   </Link>
                 ))}
-                <Link
-                  href="/enquiries"
-                  className="bg-primary text-primary-foreground px-6 py-3 rounded-full text-base font-medium text-center mt-4 shadow-md"
-                >
+                <Link href="/donate" className="border-2 border-primary text-primary px-6 py-3 rounded-full text-base font-semibold text-center mt-2">
+                  Donate
+                </Link>
+                <Link href="/enquiries" className="bg-primary text-primary-foreground px-6 py-3 rounded-full text-base font-medium text-center shadow-md">
                   Make an Enquiry
                 </Link>
               </nav>
